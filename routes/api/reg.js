@@ -2,13 +2,14 @@
  * @Author: Baozi 
  * @Date: 2018-02-13 13:40:05 
  * @Last Modified by: Baozi
- * @Last Modified time: 2018-02-13 14:22:52
+ * @Last Modified time: 2018-02-27 01:07:06
  */
 var express = require('express');
 var Router = express.Router();
 var mysql = require('mysql');
 var dbConfig = require('../../db/DBConfig');
 var userSQL = require('../../db/Usersql');
+
 Router.get("/", function (req, res, next) {
     console.log('进入');
     var pool = mysql.createPool(dbConfig.mysql);
@@ -27,7 +28,7 @@ Router.get("/", function (req, res, next) {
                 //释放连接池
                 res.json(result);
             } else {
-                var addSqlParams = [param.user, param.name, param.pass, param.qq, param.ip, param.login, param.sex, param.tuitime, param.gx, param.dz];
+                var addSqlParams = [param.user, param.name, param.pass, param.qq];
                 connection.query(userSQL.insert, addSqlParams, function (err, result) {
                     //执行sql语句 插入用户
                     if (err) {
